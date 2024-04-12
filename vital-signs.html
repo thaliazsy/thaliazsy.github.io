@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Vital Sign</title>
+</head>
+<body>
+    <h2>Create Vital Sign</h2>
+    <div id="bodyWeight">
+        <table>
+            <tr>
+                <th>Vital Sign: </th>
+                <td>
+                    <select id="mySelect" onchange="selectChange()">
+                        <option value="select">--Select--</option>
+                        <option value="bodyWeight">Body Weight</option>
+                        <option value="bodyHeight">Body Height</option>
+                        <option value="bodyTemp">Body Temperature</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Patient ID: </th>
+                <td><input type="text" id="inputID" onchange="selectChange()"></td>
+            </tr>
+            <tr>
+                <th>EffectiveDateTime: </th>
+                <td><input type="text" id="inputDate" onchange="selectChange()" placeholder="YYYY-MM-ddTHH:mm:ss"></td>
+                <td>e.g. 2024-04-15T11:00:00</td>
+            </tr>
+            <tr>
+                <th>Value: </th>
+                <td><input type="text" id="inputValue" onchange="selectChange()"></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h2>JSON Output</h2>
+        <textarea id="output" rows="40" cols="70"></textarea>
+    </div>
+</body>
+<script>
+    let BodyWeight = {
+        "resourceType": "Observation",
+        "status": "final",
+        "category" : [{
+            "coding" : [{
+                "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code" : "vital-signs",
+                "display" : "Vital Signs"
+            }]
+        }],
+        "code" : {
+            "coding" : [{
+                "system" : "http://loinc.org",
+                "code" : "29463-7",
+                "display" : "Body Weight"
+            }]
+        },
+        "subject" : {
+            "reference" : "Patient/REPLACESUBJECT"
+        },
+        "effectiveDateTime" : "REPLACEDATE",
+        "valueQuantity" : {
+            "value" : 0,
+            "unit" : "kg",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "[kg]"
+        }
+    }
+
+    let BodyHeight = {
+        "resourceType": "Observation",
+        "status": "final",
+        "category" : [{
+            "coding" : [{
+                "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code" : "vital-signs",
+                "display" : "Vital Signs"
+            }]
+        }],
+        "code" : {
+            "coding" : [{
+                "system" : "http://loinc.org",
+                "code" : "8302-2",
+                "display" : "Body Height"
+            }]
+        },
+        "subject" : {
+            "reference" : "Patient/REPLACESUBJECT"
+        },
+        "effectiveDateTime" : "REPLACEDATE",
+        "valueQuantity" : {
+            "value" : 0,
+            "unit" : "cm",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "[cm]"
+        }
+    }
+
+    let BodyTemp = {
+        "resourceType": "Observation",
+        "status": "final",
+        "category" : [{
+            "coding" : [{
+                "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code" : "vital-signs",
+                "display" : "Vital Signs"
+            }]
+        }],
+        "code" : {
+            "coding" : [{
+                "system" : "http://loinc.org",
+                "code" : "8302-2",
+                "display" : "Body Height"
+            }]
+        },
+        "subject" : {
+            "reference" : "Patient/REPLACESUBJECT"
+        },
+        "effectiveDateTime" : "REPLACEDATE",
+        "valueQuantity" : {
+            "value" : 0,
+            "unit" : "cm",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "[cm]"
+        }
+    }
+
+
+function selectChange(){
+    var x = document.getElementById("mySelect").value;
+
+    if(x == 'bodyWeight'){
+        BodyWeight.subject.reference = "Patient/" + document.getElementById("inputID").value;
+        BodyWeight.effectiveDateTime = document.getElementById("inputDate").value;
+        BodyWeight.valueQuantity.value = Number(document.getElementById("inputValue").value);
+        document.getElementById("output").innerHTML = JSON.stringify(BodyWeight, null, 4);
+    }
+    else if(x == 'bodyHeight'){
+        BodyHeight.subject.reference = "Patient/" + document.getElementById("inputID").value;
+        BodyHeight.effectiveDateTime = document.getElementById("inputDate").value;
+        BodyHeight.valueQuantity.value = Number(document.getElementById("inputValue").value);
+        document.getElementById("output").innerHTML = JSON.stringify(BodyHeight, null, 4);
+    }
+    else if(x == 'bodyTemp'){
+        BodyTemp.subject.reference = "Patient/" + document.getElementById("inputID").value;
+        BodyTemp.effectiveDateTime = document.getElementById("inputDate").value;
+        BodyTemp.valueQuantity.value = Number(document.getElementById("inputValue").value);
+        document.getElementById("output").innerHTML = JSON.stringify(BodyTemp, null, 4);
+    }
+}
+
+
+</script>
+</html>
