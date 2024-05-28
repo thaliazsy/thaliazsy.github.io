@@ -32,7 +32,7 @@
     </div>
 
     <div class="box">
-        <img id='barcode' src="" alt="" title="" width="300" height="300" />
+        <img id='barcode' src="" alt="Input Bed Number" title="" width="300" height="300" />
     </div>
 
     <p>Scan the QR code above or click the link below</p>
